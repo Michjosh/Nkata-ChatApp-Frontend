@@ -5,7 +5,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { getSender } from "../config/ChatLogics";
 import ChatLoading from "./ChatLoading";
-import GroupChatModal from "./miscellaneous/GroupChatModal";
+import GroupChatModal from "./sections/GroupChatModal";
 import { Button } from "@chakra-ui/react";
 import { ChatState } from "../Context/ChatProvider";
 import "../styles.css";
@@ -26,7 +26,10 @@ const MyChats = ({ fetchAgain }) => {
         },
       };
 
-      const response = await axios.get("http://localhost:5000/api/chat", config);
+      const response = await axios.get(
+        "http://localhost:5000/api/chat",
+        config
+      );
       setChats(response.data);
     } catch (error) {
       toast({
@@ -48,95 +51,96 @@ const MyChats = ({ fetchAgain }) => {
 
   return (
     <div className="MyChatBox">
-    <div className="chats">
-    <Box
-      d={{ base: selectedChat ? "none" : "flex", md: "flex" }}
-      flexDir="column"
-      alignItems="center"
-      p={3}
-      bg="white"
-      w={{ base: "100%", md: "31%" }}
-      borderRadius="lg"
-      borderWidth="1px"
-      display="flex" 
-      backgroundColor="blue"
-      min-height= "100vh"
-      
-    >
-      <Box
-        pb={3}
-        px={3}
-        fontSize={{ base: "28px", md: "30px" }}
-        fontFamily="Work sans"
-        d="flex"
-        w="100%"
-        justifyContent="space-between"
-        alignItems="center"
-        display="flex" 
-        flexWrap="wrap"
-        overflowY="hidden"
-      >
-        Chats
-        <GroupChatModal>
-          <Button
+      <div className="chats">
+        <Box
+          // d={{ base: selectedChat ? "none" : "flex", md: "flex" }}
+          flexDir="column"
+          alignItems="center"
+          p={3}
+          bg="white"
+          w={{ base: "100%", md: "50%" }}
+          borderRadius="lg"
+          borderWidth="1px"
+          display="flex"
+          backgroundColor="#F8F8F8"
+          min-height="100vh"
+          width="50vw"
+        >
+          <Box
+            pb={3}
+            px={3}
+            fontSize={{ base: "28px", md: "30px" }}
+            fontFamily="Work sans"
             d="flex"
-            fontSize={{ base: "17px", md: "10px", lg: "17px" }}
-            rightIcon={<AddIcon />}
+            w="100%"
+            justifyContent="space-between"
+            alignItems="center"
+            display="flex"
+            flexWrap="wrap"
+            overflowY="hidden"
           >
-            New Group Chat
-          </Button>
-        </GroupChatModal>
-      </Box>
-     
-    </Box>
-   
-    </div>
-    <div className="chatDeatils">
-    <Box
-        d="flex"
-        flexDir="column"
-        p={3}
-        bg="#F8F8F8"
-        w="31%"
-        h="100%"
-        borderRadius="lg"
-        overflowY="hidden"
-        flexWrap="wrap"
-      >
-        {chats ? (
-          <Stack overflowY="scroll" >
-            {chats.map((chat) => (
-              <Box
-                onClick={() => setSelectedChat(chat)}
-                cursor="pointer"
-                bg={selectedChat === chat ? "#38B2AC" : "#E8E8E8"}
-                color={selectedChat === chat ? "white" : "black"}
-                px={3}
-                py={2}
-                borderRadius="lg"
-                key={chat._id}
+            Chats
+            <GroupChatModal>
+              <Button
+                d="flex"
+                fontSize={{ base: "17px", md: "10px", lg: "17px" }}
+                rightIcon={<AddIcon />}
               >
-                <Text>
-                  {!chat.isGroupChat
-                    ? getSender(loggedUser, chat.users)
-                    : chat.chatName}
-                </Text>
-                {chat.latestMessage && chat.latestMessage.sender && (
-                  <Text fontSize="xs">
-                    <b>{chat.latestMessage.sender.name} : </b>
-                    {chat.latestMessage.content.length > 50
-                      ? chat.latestMessage.content.substring(0, 51) + "..."
-                      : chat.latestMessage.content}
+                New Group Chat
+              </Button>
+            </GroupChatModal>
+          </Box>
+        </Box>
+      </div>
+      <div className="chatDeatils">
+        <Box
+          d="flex"
+          flexDir="column"
+          p={3}
+          bg="#F8F8F8"
+          w="25vw"
+          h="100%"
+          borderRadius="lg"
+          overflowY="hidden"
+          flexWrap="wrap"
+        >
+          {chats ? (
+            <Stack overflowY="scroll" w="60vw">
+              {chats.map((chat) => (
+                <Box
+                  onClick={() => setSelectedChat(chat)}
+                  cursor="pointer"
+                  bg={selectedChat === chat ? "#38B2AC" : "#E8E8E8"}
+                  color={selectedChat === chat ? "white" : "black"}
+                  px={3}
+                  py={2}
+                  borderRadius="lg"
+                  key={chat._id}
+                  w="150vw"
+                >
+                  <Text>
+                    {!chat.isGroupChat
+                      ? loggedUser &&
+                        chat.users &&
+                        getSender(loggedUser, chat.users)?.name
+                      : chat.chatName}
                   </Text>
-                )}
-              </Box>
-            ))}
-          </Stack>
-        ) : (
-          <ChatLoading />
-        )}
-      </Box>
-    </div>
+                  {chat.latestMessage && chat.latestMessage.sender && (
+                    <Text fontSize="xs">
+                      <b>{chat.latestMessage.sender.name} : </b>
+                      {chat.latestMessage.content.length > 50
+                        ? chat.latestMessage.content.substring(0, 51) + "..."
+                        : chat.latestMessage.content}
+                    </Text>
+                  )}
+                </Box>
+              ))}
+            </Stack>
+          ) : (
+            <ChatLoading />
+          )}
+        </Box>
+      </div>
     </div>
   );
 };

@@ -7,15 +7,17 @@ import { getSender, getSenderFull } from "../config/ChatLogics";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { ArrowBackIcon } from "@chakra-ui/icons";
-import ProfileModal from "./miscellaneous/ProfileModal";
+import ProfileModal from "./sections/ProfileModal";
 import ScrollableChat from "./ScrollableChat";
 import Lottie from "react-lottie";
 import animationData from "../animations/typing.json";
-
+import chatAni from "../animations/chat-icon.json";
 import io from "socket.io-client";
-import UpdateGroupChatModal from "./miscellaneous/GroupOps";
+import UpdateGroupChatModal from "./sections/GroupOps";
 import { ChatState } from "../Context/ChatProvider";
-const ENDPOINT = "http://localhost:5000"; // "https://talk-a-tive.herokuapp.com"; -> After deployment
+import { Button } from "@chakra-ui/react";
+
+const ENDPOINT = "http://localhost:5000"; // change -> After deployment
 var socket, selectedChatCompare;
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
@@ -33,6 +35,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     animationData: animationData,
     rendererSettings: {
       preserveAspectRatio: "xMidYMid slice",
+      chatAni: chatAni,
     },
   };
   const { selectedChat, setSelectedChat, user, notification, setNotification } =
@@ -69,6 +72,40 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
       });
     }
   };
+
+  // const sendMessage = async () => {
+  //   if (newMessage) {
+  //     socket.emit("stop typing", selectedChat._id);
+  //     try {
+  //       const config = {
+  //         headers: {
+  //           "Content-type": "application/json",
+  //           Authorization: `Bearer ${user.token}`,
+  //         },
+  //       };
+  //       setNewMessage("");
+  //       const response = await axios.post(
+  //         "http://localhost:5000/api/message",
+  //         {
+  //           content: newMessage,
+  //           chatId: selectedChat,
+  //         },
+  //         config
+  //       );
+  //       socket.emit("new message", response.data);
+  //       setMessages([...messages, response.data]);
+  //     } catch (error) {
+  //       toast({
+  //         title: "Error Occurred!",
+  //         description: "Failed to send the Message",
+  //         status: "error",
+  //         duration: 5000,
+  //         isClosable: true,
+  //         position: "bottom",
+  //       });
+  //     }
+  //   }
+  // };
 
   const sendMessage = async (event) => {
     if (event.key === "Enter" && newMessage) {
@@ -160,106 +197,165 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
   return (
     <div className="SingleChat">
-    <>
-      {selectedChat ? (
-        <>
-          <Text
-            fontSize={{ base: "28px", md: "0px" }}
-            pb={3}
-            px={2}
-            w="100%"
-            fontFamily="Work sans"
-            d="flex"
-            justifyContent={{ base: "space-between" }}
-            alignItems="center"
-          >
-            <IconButton
-              d={{ base: "flex", md: "none" }}
-              icon={<ArrowBackIcon />}
-              onClick={() => setSelectedChat("")}
-              marginRight= "90%"
-            />
-            
-            {messages &&
-              (!selectedChat.isGroupChat ? (
-                <>
-                  {getSender(user, selectedChat.users)}
-                  <ProfileModal
-                    user={getSenderFull(user, selectedChat.users)} 
-                  />
-                </>
+      <>
+        {selectedChat ? (
+          <>
+            <Text
+              fontSize={{ base: "28px", md: "0px" }}
+              pb={3}
+              px={2}
+              w="60vw"
+              fontFamily="Work sans"
+              d="flex"
+              justifyContent={{ base: "space-between" }}
+              alignItems="center"
+            >
+              <IconButton
+                icon={<ArrowBackIcon />}
+                onClick={() => setSelectedChat("")}
+                marginRight="90%"
+              />
+
+              {messages &&
+                (!selectedChat.isGroupChat ? (
+                  <>
+                    {getSender(user, selectedChat.users)}
+                    <ProfileModal
+                      user={getSenderFull(user, selectedChat.users)}
+                    />
+                  </>
+                ) : (
+                  <>
+                    {selectedChat.chatName.toUpperCase()}
+                    <UpdateGroupChatModal
+                      fetchMessages={fetchMessages}
+                      fetchAgain={fetchAgain}
+                      setFetchAgain={setFetchAgain}
+                    />
+                  </>
+                ))}
+            </Text>
+            <Box
+              d="flex"
+              flexDir="column"
+              justifyContent="flex-end"
+              p={3}
+              w="100%"
+              h="100%"
+              borderRadius="lg"
+              overflowY="hidden"
+            >
+              {loading ? (
+                <Spinner
+                  size="xl"
+                  w={5}
+                  h={5}
+                  alignSelf="center"
+                  margin="auto"
+                />
               ) : (
-                <>
-                  {selectedChat.chatName.toUpperCase()}
-                  <UpdateGroupChatModal
-                    fetchMessages={fetchMessages}
-                    fetchAgain={fetchAgain}
-                    setFetchAgain={setFetchAgain}
+                <div className="messages">
+                  <ScrollableChat messages={messages} />
+                </div>
+              )}
+
+              {/* <FormControl
+                onKeyDown={sendMessage}
+                id="first-name"
+                isRequired
+                mt={3}
+              >
+                {istyping ? (
+                  <div>
+                    <Lottie
+                      options={defaultOptions}
+                      width={100}
+                      style={{ marginBottom: 15, marginLeft: 0 }}
+                    />
+                  </div>
+                ) : (
+                  <></>
+                )}
+
+                <div
+                  className="textBox"
+                  style={{ display: "flex", justifyContent: "space-between" }}
+                >
+                  <Input
+                    variant="filled"
+                    bg="#E0E0E0"
+                    placeholder="Enter a message.."
+                    value={newMessage}
+                    onChange={typingHandler}
                   />
-                </>
-              ))}
-          </Text>
+                  <Button onClick={sendMessage} bg="#E0E0E0">
+                    Send
+                  </Button>
+                </div>
+              </FormControl> */}
+
+              <FormControl
+                onClick={sendMessage}
+                onKeyDown={sendMessage}
+                id="first-name"
+                isRequired
+                mt={3}
+               
+              >
+                {istyping ? (
+                  <div>
+                    <Lottie
+                      options={defaultOptions}
+                      width={50}
+                      style={{ marginBottom: 15, marginLeft: 0 }}
+                    />
+                  </div>
+                ) : (
+                  <></>
+                )}
+                {
+                <div className="textBox" style={{ display: "flex", justifyContent: "space-between" }}>
+                <Input
+                  variant="filled"
+                  bg="#E0E0E0"
+                  placeholder="Enter a message.."
+                  value={newMessage}
+                  onChange={typingHandler}
+               
+                />
+                <Button  bg="#E0E0E0">Send</Button>
+                </div> 
+                }
+
+              </FormControl>
+
+
+            </Box>
+          </>
+        ) : (
+          // to get socket.io on same page
           <Box
             d="flex"
-            flexDir="column"
-            justifyContent="flex-end"
-            p={3}
-            bg="#E8E8E8"
-            w="100%"
+            alignItems="center"
+            justifyContent="center"
             h="100%"
-            borderRadius="lg"
-            overflowY="hidden"
+            w="60vw"
           >
-            {loading ? (
-              <Spinner
-                size="xl"
-                w={5}
-                h={5}
-                alignSelf="center"
-                margin="auto"
-              />
-            ) : (
-              <div className="messages">
-                <ScrollableChat messages={messages} />
-              </div>
-            )}
-
-            <FormControl
-              onKeyDown={sendMessage}
-              id="first-name"
-              isRequired
-              mt={3}
-            >
-              {istyping ? (
-                <div>
-                  <Lottie
-                    options={defaultOptions}
-                    width={100}
-                    style={{ marginBottom: 15, marginLeft: 0 }}
-                  />
-                </div>
-              ) : (
-                <></>
-              )}
-              <Input
-                variant="filled"
-                bg="#E0E0E0"
-                placeholder="Enter a message.."
-                value={newMessage}
-                onChange={typingHandler}
-              />
-            </FormControl>
+            <Lottie
+              options={{
+                animationData: chatAni,
+                loop: true,
+                autoplay: true,
+              }}
+              height={500} 
+              width={500} 
+            />
+            <Text fontSize="3xl" pb={3} align={"center"}>
+              Click on a user to start chatting
+            </Text>
           </Box>
-        </>
-      ) : (
-        // to get socket.io on same page
-        <Box d="flex" alignItems="center" justifyContent="center" h="100%">
-          <Text fontSize="3xl" pb={3} fontFamily="Work sans">
-            Click on a user to start chatting
-          </Text>
-        </Box>
-      )}
-    </>
+        )}
+      </>
     </div>
   );
 };

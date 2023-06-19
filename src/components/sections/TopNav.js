@@ -29,7 +29,7 @@ import ProfileModal from "./ProfileModal";
 import NotificationBadge from "react-notification-badge";
 import { Effect } from "react-notification-badge";
 import { getSender } from "../../config/ChatLogics";
-import UserListItem from "../userAvatar/UserListItem";
+import UserListItem from "./UserListItem";
 import { ChatState } from "../../Context/ChatProvider";
 
 function TopNavigation() {
@@ -136,23 +136,28 @@ function TopNavigation() {
         d="flex"
         justifyContent="space-between"
         alignItems="center"
-        bg="white"
+        bg=" rgba(33, 31, 34, 0.833)"
         w="100%"
         p="5px 10px 5px 10px"
         borderWidth="5px"
         display="flex"
-        // flexWrap="wrap"
+        borderRadius="3%"
       >
-        <Tooltip label="Search Users to chat" hasArrow placement="bottom-end">
-          <Button variant="ghost" onClick={onOpen}>
+        <Tooltip
+          color="white"
+          label="Search Users to chat"
+          hasArrow
+          placement="bottom-end"
+        >
+          <Button color="white" variant="ghost" onClick={onOpen}>
             <i className="fas fa-search"></i>
-            <Text d={{ base: "none", md: "flex" }} px={4}>
+            <Text d={{ base: "none", md: "flex" }} px={4} color="white">
               Search User
             </Text>
           </Button>
         </Tooltip>
-        <Text fontSize="2xl" fontFamily="Work sans">
-          Nkata
+        <Text fontSize="2xl" color="white">
+          Nkata...
         </Text>
         <div>
           <Menu>
@@ -161,7 +166,7 @@ function TopNavigation() {
                 count={notification.length}
                 effect={Effect.SCALE}
               />
-              <BellIcon fontSize="2xl" m={1} />
+              <BellIcon color="white" fontSize="2xl" m={1} />
             </MenuButton>
             <MenuList pl={2}>
               {!notification.length && "No New Messages"}
@@ -222,11 +227,11 @@ function TopNavigation() {
             {loading ? (
               <ChatLoading />
             ) : (
-              searchResult?.map((user) => (
+              searchResult?.map((result) => (
                 <UserListItem
-                  key={user._id}
-                  user={user}
-                  handleFunction={() => accessChat(user._id)}
+                  key={result._id}
+                  user={result}
+                  handleFunction={() => accessChat(result._id)}
                 />
               ))
             )}

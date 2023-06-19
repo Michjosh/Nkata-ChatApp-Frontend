@@ -5,37 +5,43 @@
     flex-direction: column;
     overflow-y: scroll;
     scrollbar-width: none;
-    background-color: rgb(15, 15, 15);
+    background-color: rgb(163, 158, 158);
     max-height: 100%;
-    /* background-image: url("./background.jpg");
-    background-position: center;
-    background-size: cover; */
-    /* background-opacity: 30%; */
+    border-radius: 0%;
+    width: 100%;
     
   }
 
   .Chatpage{
-    background-color: rgb(241, 241, 242);
-    max-height: 100%;
-    display: flexbox;
-    position: fixed;
-    overflow-y: hidden;
-    align-items: flex-end;
-    justify-content: flex-end;
-    max-width: 100%;
+    background-color: rgba(33, 31, 34, 0.833);
+    /* height: 150vh; */
+    /* display: flexbox; */
+    /* position: fixed; */
+    /* overflow-y: hidden; */
+    /* align-items: flex-end;
+    justify-content: flex-end; */
   }
 
-  .ChatBox{
-    background-color: rgb(115, 9, 220);
-    max-height: 100%;
+  .chatbox{
+    background-color: rgb(238, 236, 239);
     overflow-y: scroll;
-    margin-left: 32%;
-    margin-top: -12%;
-    width: 99%;
-    max-height: 100%;
+    margin-left: -30%;
+    margin-top: 0%;
+    width: 70%;
+    max-height: 98%;
+  }
+
+  .mychats{
+    background-color: rgb(245, 242, 248);
+    overflow-y: scroll;
+    margin-left: 1%;
+    margin-top: 0%;
+    width: 51%;
+    max-height: 98%;
   }
 
   .SingleChat{
-    background-color: brown;
+    background-color: whitesmoke;
     height: 100%;
+    width: 60vw;
   }
