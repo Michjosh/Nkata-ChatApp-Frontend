@@ -14,12 +14,7 @@
 
   .Chatpage{
     background-color: rgba(33, 31, 34, 0.833);
-    /* height: 150vh; */
-    /* display: flexbox; */
-    /* position: fixed; */
-    /* overflow-y: hidden; */
-    /* align-items: flex-end;
-    justify-content: flex-end; */
+
   }
 
   .chatbox{

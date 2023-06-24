@@ -5,14 +5,13 @@ import { VStack } from "@chakra-ui/layout";
 import { useToast } from "@chakra-ui/toast";
 import axios from "axios";
 import { useState } from "react";
-import { useHistory } from "react-router";
+import { useHistory } from "react-router-dom";
 
 const Signup = () => {
   const [show, setShow] = useState(false);
+  const [formVisible, setFormVisible] = useState(true); 
   const handleClick = () => setShow(!show);
   const toast = useToast();
-  const history = useHistory();
-
   const [name, setName] = useState();
   const [email, setEmail] = useState();
   const [confirmpassword, setConfirmpassword] = useState();
@@ -20,11 +19,12 @@ const Signup = () => {
   const [pic, setPic] = useState();
   const [picLoading, setPicLoading] = useState(false);
 
+
   const submitHandler = async () => {
     setPicLoading(true);
     if (!name || !email || !password || !confirmpassword) {
       toast({
-        title: "Please Fill all the Feilds",
+        title: "Please Fill all the Fields",
         status: "warning",
         duration: 5000,
         isClosable: true,
@@ -50,7 +50,7 @@ const Signup = () => {
           "Content-type": "application/json",
         },
       };
-      const response= await axios.post(
+      const response = await axios.post(
         "http://localhost:5000/api/user",
         {
           name,
@@ -62,18 +62,17 @@ const Signup = () => {
       );
       console.log(response.data);
       toast({
-        title: "Registration Successful",
+        title: "Account created Successfully. Verification email sent. Check your email to verify your email address and complete your registration",
         status: "success",
-        duration: 5000,
+        duration: 15000,
         isClosable: true,
         position: "bottom",
       });
-      localStorage.setItem("userInfo", JSON.stringify(response.data));
       setPicLoading(false);
-      history.push("/chats");
+      setFormVisible(false); 
     } catch (error) {
       toast({
-        title: "Error Occured!",
+        title: "Error Occurred!",
         description: error.response.data.message,
         status: "error",
         duration: 5000,
@@ -83,6 +82,7 @@ const Signup = () => {
       setPicLoading(false);
     }
   };
+
 
   const postDetails = (pics) => {
     setPicLoading(true);
@@ -102,7 +102,7 @@ const Signup = () => {
       data.append("file", pics);
       data.append("upload_preset", "ChatApp");
       data.append("cloud_name", "def6igz95");
-      fetch("https://api.cloudinary.com/v1_1/def6igz95", {
+      fetch("https://api.cloudinary.com/v1_1/def6igz95/image/upload", {
         method: "post",
         body: data,
       })
@@ -129,8 +129,11 @@ const Signup = () => {
     }
   };
 
+
   return (
     <VStack spacing="5px">
+      {formVisible && ( 
+        <>
       <FormControl id="first-name" isRequired>
         <FormLabel>Name</FormLabel>
         <Input
@@ -194,6 +197,8 @@ const Signup = () => {
       >
         Sign Up
       </Button>
+      </>
+      )}
     </VStack>
   );
 };

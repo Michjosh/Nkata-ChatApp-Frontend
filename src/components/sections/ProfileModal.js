@@ -13,6 +13,9 @@ import {
   IconButton,
   Text,
   Image,
+  FormControl,
+  Input,
+  FormLabel // Add this line
 } from "@chakra-ui/react";
 
 const ProfileModal = ({ user, children }) => {
@@ -33,6 +36,8 @@ const ProfileModal = ({ user, children }) => {
           flexDirection="column"
           alignItems="center"
           justifyContent="center"
+          bg="black"
+          color="white"
         >
           <ModalHeader
             fontSize="40px"
@@ -51,6 +56,8 @@ const ProfileModal = ({ user, children }) => {
               borderRadius="full"
               boxSize="150px"
               overflow="hidden"
+              marginLeft="32%"
+              marginBottom="2%"
             >
               <Image src={user.pic} alt={user.name} />
             </Box>
@@ -68,7 +75,9 @@ const ProfileModal = ({ user, children }) => {
         </ModalContent>
       </Modal>
     </>
-  );
-};
+  )};
+  
 
 export default ProfileModal;
+
+

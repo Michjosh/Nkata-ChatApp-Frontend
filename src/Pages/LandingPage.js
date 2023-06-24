@@ -37,12 +37,14 @@ import {
           m="40px 0 15px 0"
           borderRadius="lg"
           borderWidth="1px"
+          // marginTop="15%"
+          marginLeft="100%"
         >
           <Text fontSize="4xl" fontFamily="Work sans">
-            Nkata
+            Nkata...
           </Text>
         </Box>
-        <Box bg="white" w="100%" p={4} borderRadius="lg" borderWidth="1px">
+        <Box bg="whitesmoke" w="100%" p={4} marginLeft="100%" marginBottom="4%" marginTop="-10%" paddingBottom="8%" borderRadius="lg" borderWidth="1px">
           <Tabs isFitted variant="soft-rounded">
             <TabList mb="1em">
               <Tab>Login</Tab>

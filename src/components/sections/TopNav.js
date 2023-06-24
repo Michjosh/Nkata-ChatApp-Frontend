@@ -26,6 +26,7 @@ import { useToast } from "@chakra-ui/toast";
 import ChatLoading from "../ChatLoading";
 import { Spinner } from "@chakra-ui/spinner";
 import ProfileModal from "./ProfileModal";
+import UpdateProfileModal from "./UpdateProfileModal";
 import NotificationBadge from "react-notification-badge";
 import { Effect } from "react-notification-badge";
 import { getSender } from "../../config/ChatLogics";
@@ -149,9 +150,9 @@ function TopNavigation() {
           hasArrow
           placement="bottom-end"
         >
-          <Button color="white" variant="ghost" onClick={onOpen}>
+          <Button color="black" onClick={onOpen}>
             <i className="fas fa-search"></i>
-            <Text d={{ base: "none", md: "flex" }} px={4} color="white">
+            <Text d={{ base: "none", md: "flex" }} px={4} color="black">
               Search User
             </Text>
           </Button>
@@ -196,10 +197,16 @@ function TopNavigation() {
             </MenuButton>
             <MenuList>
               <ProfileModal user={user}>
-                <MenuItem>My Profile</MenuItem>{" "}
+                <MenuItem>My Profile</MenuItem>
               </ProfileModal>
               <MenuDivider />
+              {/* <UpdateProfileModal user={user}>
+                <MenuItem>Update Profile</MenuItem>
+              </UpdateProfileModal> */}
+              <MenuDivider />
               <MenuItem onClick={logoutHandler}>Logout</MenuItem>
+              <MenuDivider />
+              <MenuItem>Check your email to activate your account</MenuItem>
             </MenuList>
           </Menu>
         </div>

@@ -3,9 +3,9 @@
 .landingpage {
   min-height: 100vh;
   display: flex;
-  background-image: url("./background.jpg");
+  background-image: url("./chat.jpg");
   background-position: center;
-  background-size: contain;
+  background-size: cover;
 }
 
 .App{
