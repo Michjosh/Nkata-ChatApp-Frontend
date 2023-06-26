@@ -259,41 +259,6 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                 </div>
               )}
 
-              {/* <FormControl
-                onKeyDown={sendMessage}
-                id="first-name"
-                isRequired
-                mt={3}
-              >
-                {istyping ? (
-                  <div>
-                    <Lottie
-                      options={defaultOptions}
-                      width={100}
-                      style={{ marginBottom: 15, marginLeft: 0 }}
-                    />
-                  </div>
-                ) : (
-                  <></>
-                )}
-
-                <div
-                  className="textBox"
-                  style={{ display: "flex", justifyContent: "space-between" }}
-                >
-                  <Input
-                    variant="filled"
-                    bg="#E0E0E0"
-                    placeholder="Enter a message.."
-                    value={newMessage}
-                    onChange={typingHandler}
-                  />
-                  <Button onClick={sendMessage} bg="#E0E0E0">
-                    Send
-                  </Button>
-                </div>
-              </FormControl> */}
-
               <FormControl
                 onClick={sendMessage}
                 onKeyDown={sendMessage}
@@ -347,7 +312,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                 loop: true,
                 autoplay: true,
               }}
-              height={500} 
+              height={450} 
               width={500} 
             />
             <Text fontSize="3xl" pb={3} align={"center"}>

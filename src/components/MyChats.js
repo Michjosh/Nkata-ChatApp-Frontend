@@ -50,10 +50,9 @@ const MyChats = ({ fetchAgain }) => {
   }, [fetchAgain]);
 
   return (
-    <div className="MyChatBox">
-      <div className="chats">
+  <Box>
+      <Box>
         <Box
-          // d={{ base: selectedChat ? "none" : "flex", md: "flex" }}
           flexDir="column"
           alignItems="center"
           p={3}
@@ -91,8 +90,8 @@ const MyChats = ({ fetchAgain }) => {
             </GroupChatModal>
           </Box>
         </Box>
-      </div>
-      <div className="chatDeatils">
+        </Box>
+      <Box>
         <Box
           d="flex"
           flexDir="column"
@@ -148,8 +147,8 @@ const MyChats = ({ fetchAgain }) => {
             <ChatLoading />
           )}
         </Box>
-      </div>
-    </div>
+      </Box>
+      </Box>
   );
 };
 
