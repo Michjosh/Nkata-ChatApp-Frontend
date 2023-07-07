@@ -73,40 +73,6 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     }
   };
 
-  // const sendMessage = async () => {
-  //   if (newMessage) {
-  //     socket.emit("stop typing", selectedChat._id);
-  //     try {
-  //       const config = {
-  //         headers: {
-  //           "Content-type": "application/json",
-  //           Authorization: `Bearer ${user.token}`,
-  //         },
-  //       };
-  //       setNewMessage("");
-  //       const response = await axios.post(
-  //         "http://localhost:5000/api/message",
-  //         {
-  //           content: newMessage,
-  //           chatId: selectedChat,
-  //         },
-  //         config
-  //       );
-  //       socket.emit("new message", response.data);
-  //       setMessages([...messages, response.data]);
-  //     } catch (error) {
-  //       toast({
-  //         title: "Error Occurred!",
-  //         description: "Failed to send the Message",
-  //         status: "error",
-  //         duration: 5000,
-  //         isClosable: true,
-  //         position: "bottom",
-  //       });
-  //     }
-  //   }
-  // };
-
   const sendMessage = async (event) => {
     if (event.key === "Enter" && newMessage) {
       socket.emit("stop typing", selectedChat._id);
@@ -147,21 +113,18 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     socket.on("connected", () => setSocketConnected(true));
     socket.on("typing", () => setIsTyping(true));
     socket.on("stop typing", () => setIsTyping(false));
-
-    // eslint-disable-next-line
-  }, []);
+  }, [user]);
 
   useEffect(() => {
     fetchMessages();
 
     selectedChatCompare = selectedChat;
-    // eslint-disable-next-line
   }, [selectedChat]);
 
   useEffect(() => {
     socket.on("message recieved", (newMessageRecieved) => {
       if (
-        !selectedChatCompare || // if chat is not selected or doesn't match current chat
+        !selectedChatCompare ||
         selectedChatCompare._id !== newMessageRecieved.chat._id
       ) {
         if (!notification.includes(newMessageRecieved)) {
@@ -265,7 +228,6 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                 id="first-name"
                 isRequired
                 mt={3}
-               
               >
                 {istyping ? (
                   <div>
@@ -279,22 +241,21 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                   <></>
                 )}
                 {
-                <div className="textBox" style={{ display: "flex", justifyContent: "space-between" }}>
-                <Input
-                  variant="filled"
-                  bg="#E0E0E0"
-                  placeholder="Enter a message.."
-                  value={newMessage}
-                  onChange={typingHandler}
-               
-                />
-                <Button  bg="#E0E0E0">Send</Button>
-                </div> 
+                  <div
+                    className="textBox"
+                    style={{ display: "flex", justifyContent: "space-between" }}
+                  >
+                    <Input
+                      variant="filled"
+                      bg="#E0E0E0"
+                      placeholder="Enter a message.."
+                      value={newMessage}
+                      onChange={typingHandler}
+                    />
+                    <Button bg="#E0E0E0">Send</Button>
+                  </div>
                 }
-
               </FormControl>
-
-
             </Box>
           </>
         ) : (
@@ -312,8 +273,8 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                 loop: true,
                 autoplay: true,
               }}
-              height={450} 
-              width={500} 
+              height={450}
+              width={500}
             />
             <Text fontSize="3xl" pb={3} align={"center"}>
               Click on a user to start chatting

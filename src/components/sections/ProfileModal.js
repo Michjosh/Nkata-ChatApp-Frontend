@@ -13,9 +13,6 @@ import {
   IconButton,
   Text,
   Image,
-  FormControl,
-  Input,
-  FormLabel // Add this line
 } from "@chakra-ui/react";
 
 const ProfileModal = ({ user, children }) => {

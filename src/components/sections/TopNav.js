@@ -26,7 +26,6 @@ import { useToast } from "@chakra-ui/toast";
 import ChatLoading from "../ChatLoading";
 import { Spinner } from "@chakra-ui/spinner";
 import ProfileModal from "./ProfileModal";
-import UpdateProfileModal from "./UpdateProfileModal";
 import NotificationBadge from "react-notification-badge";
 import { Effect } from "react-notification-badge";
 import { getSender } from "../../config/ChatLogics";
@@ -200,13 +199,7 @@ function TopNavigation() {
                 <MenuItem>My Profile</MenuItem>
               </ProfileModal>
               <MenuDivider />
-              {/* <UpdateProfileModal user={user}>
-                <MenuItem>Update Profile</MenuItem>
-              </UpdateProfileModal> */}
-              <MenuDivider />
               <MenuItem onClick={logoutHandler}>Logout</MenuItem>
-              <MenuDivider />
-              <MenuItem>Check your email to activate your account</MenuItem>
             </MenuList>
           </Menu>
         </div>
@@ -229,7 +222,7 @@ function TopNavigation() {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
               />
-              <Button onClick={handleSearch}>Go</Button>
+              <Button onClick={handleSearch}>Search</Button>
             </Box>
             {loading ? (
               <ChatLoading />

@@ -3,7 +3,7 @@
 .landingpage {
   min-height: 100vh;
   display: flex;
-  background-image: url("./chat.jpg");
+  background-image: url("./ChatApp.svg");
   background-position: center;
   background-size: cover;
 }

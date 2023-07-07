@@ -15,6 +15,7 @@ const Login = () => {
   const [password, setPassword] = useState();
   const [loading, setLoading] = useState(false);
 
+
   const history = useHistory();
 
   const submitHandler = async () => {
@@ -43,7 +44,7 @@ const Login = () => {
         { email, password },
         config
       );
-      
+
       toast({
         title: "Login Successful",
         status: "success",
@@ -103,7 +104,6 @@ const Login = () => {
       >
         Login
       </Button>
-
     </VStack>
   );
 };
